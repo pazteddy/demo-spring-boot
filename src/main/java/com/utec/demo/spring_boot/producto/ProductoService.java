@@ -32,11 +32,16 @@ public class ProductoService {
                 .filter(p -> p.getId()
                         .equals(id))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ProductoNoEncontradoException(id));
     }
     public boolean eliminar(Long id)
     {
-        return BD.removeIf(p -> p.getId().equals(id));
+        boolean productoEliminado =  BD.removeIf(p -> p.getId().equals(id));
+        if(!productoEliminado)
+        {
+            throw new ProductoNoEncontradoException(id);
+        }
+        return productoEliminado;
     }
 
 }
