@@ -4,6 +4,7 @@ import com.utec.demo.spring_boot.producto.ProductoServiceBD;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/productosBD") // Esto viene de los productos de la base de datos
@@ -37,6 +38,28 @@ public class ProductoControllerBD {
         return productoService.obtenerPorId(id)
                 .map(p -> {
                     producto.setId(id);
+                    return ResponseEntity.ok(productoService.guardar(producto));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductoBD> actualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        return productoService.obtenerPorId(id)
+                .map(producto -> {
+                    updates.forEach((key, value) -> {
+                        switch (key) {
+                            case "nombre":
+                                producto.setNombre((String)value);
+                                break;
+                            case "precio":
+                                producto.setPrecio(Double.valueOf(value.toString()));
+                                break;
+                            case "stock":
+                                producto.setStock(Integer.valueOf(value.toString()));
+                                break;
+                            // Agrega más campos si es necesario
+                        }
+                    });
                     return ResponseEntity.ok(productoService.guardar(producto));
                 })
                 .orElse(ResponseEntity.notFound().build());
