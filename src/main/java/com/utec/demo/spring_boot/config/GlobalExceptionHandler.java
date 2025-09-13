@@ -44,7 +44,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new AuthDTO.ErrorResponse("INTERNAL_ERROR", "Error interno del servidor", 500));
     }
-
     // Manejo de excepciones de órdenes
     @ExceptionHandler(OrdenException.OrdenNoEncontradaException.class)
     public ResponseEntity<AuthDTO.ErrorResponse> handleOrdenNoEncontrada(OrdenException.OrdenNoEncontradaException e) {
