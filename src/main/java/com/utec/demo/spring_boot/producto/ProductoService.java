@@ -14,31 +14,33 @@ public class ProductoService {
     // Aquí puedes implementar la lógica de negocio relacionada con los productos
     private static final List<Producto> BD = new ArrayList<>();
     private static final AtomicLong NEXT_ID = new AtomicLong(1L);
-    public List<Producto> listar()
-    {
+
+    public List<Producto> listar() {
         return BD;
     }
+
     public Producto crear(ProductoDTO productoDto) {
         Producto nuevoProducto = new Producto(
                 NEXT_ID.getAndIncrement(),
-                productoDto.getNombre(),
-                productoDto.getPrecio());
+                productoDto.getTitle(),
+                productoDto.getImgSrc(),
+                productoDto.getPrice(),
+                productoDto.getStock());
         BD.add(nuevoProducto);
         return nuevoProducto;
     }
-    public Producto obtenerPorId(Long id)
-    {
+
+    public Producto obtenerPorId(Long id) {
         return BD.stream()
                 .filter(p -> p.getId()
                         .equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ProductoNoEncontradoException(id));
     }
-    public boolean eliminar(Long id)
-    {
-        boolean productoEliminado =  BD.removeIf(p -> p.getId().equals(id));
-        if(!productoEliminado)
-        {
+
+    public boolean eliminar(Long id) {
+        boolean productoEliminado = BD.removeIf(p -> p.getId().equals(id));
+        if (!productoEliminado) {
             throw new ProductoNoEncontradoException(id);
         }
         return productoEliminado;

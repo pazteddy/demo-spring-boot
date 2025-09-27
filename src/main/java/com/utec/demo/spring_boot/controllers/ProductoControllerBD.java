@@ -1,4 +1,5 @@
 package com.utec.demo.spring_boot.controllers;
+
 import com.utec.demo.spring_boot.producto.ProductoBD;
 import com.utec.demo.spring_boot.producto.ProductoServiceBD;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ProductoControllerBD {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductoBD> actualizar(@PathVariable Long id,
-                                                 @RequestBody ProductoBD producto) {
+            @RequestBody ProductoBD producto) {
         return productoService.obtenerPorId(id)
                 .map(p -> {
                     producto.setId(id);
@@ -42,17 +43,19 @@ public class ProductoControllerBD {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductoBD> actualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<ProductoBD> actualizarParcial(@PathVariable Long id,
+            @RequestBody Map<String, Object> updates) {
         return productoService.obtenerPorId(id)
                 .map(producto -> {
                     updates.forEach((key, value) -> {
                         switch (key) {
-                            case "nombre":
-                                producto.setNombre((String)value);
+                            case "title":
+                                producto.setTitle((String) value);
                                 break;
-                            case "precio":
-                                producto.setPrecio(Double.valueOf(value.toString()));
+                            case "price":
+                                producto.setPrice(Double.valueOf(value.toString()));
                                 break;
                             case "stock":
                                 producto.setStock(Integer.valueOf(value.toString()));

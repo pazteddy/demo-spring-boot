@@ -59,13 +59,15 @@ public class OrdenService {
         Orden ordenCompleta = ordenRepository.findByIdAndUsuarioIdWithDetalles(ordenId, usuarioId)
                 .orElseThrow(() -> new OrdenException.OrdenNoEncontradaException(ordenId));
 
-        log.info("Orden creada exitosamente con ID: {} y {} detalles", ordenCompleta.getId(), ordenCompleta.getDetalles().size());
+        log.info("Orden creada exitosamente con ID: {} y {} detalles", ordenCompleta.getId(),
+                ordenCompleta.getDetalles().size());
         return convertirAOrdenResponse(ordenCompleta);
     }
 
     @Transactional
     private OrdenDetalle agregarDetalle(Orden orden, OrdenDTO.CrearDetalleRequest detalleRequest) {
-        log.info("Agregando detalle: producto {} cantidad {}", detalleRequest.getProductoId(), detalleRequest.getCantidad());
+        log.info("Agregando detalle: producto {} cantidad {}", detalleRequest.getProductoId(),
+                detalleRequest.getCantidad());
 
         // Buscar el producto
         ProductoBD producto = productoRepository.findById(detalleRequest.getProductoId())
@@ -74,10 +76,9 @@ public class OrdenService {
         // Validar stock suficiente
         if (producto.getStock() < detalleRequest.getCantidad()) {
             throw new OrdenException.StockInsuficienteException(
-                    producto.getNombre(),
+                    producto.getTitle(),
                     producto.getStock(),
-                    detalleRequest.getCantidad()
-            );
+                    detalleRequest.getCantidad());
         }
 
         // Crear el detalle
@@ -85,7 +86,7 @@ public class OrdenService {
         detalle.setOrden(orden);
         detalle.setProducto(producto);
         detalle.setCantidad(detalleRequest.getCantidad());
-        detalle.setPrecioUnitario(producto.getPrecio());
+        detalle.setPrecioUnitario(producto.getPrice());
 
         // Guardar el detalle
         detalle = ordenDetalleRepository.save(detalle);
@@ -95,7 +96,7 @@ public class OrdenService {
         productoRepository.save(producto);
 
         log.info("Detalle agregado: {} unidades de {} a precio {}",
-                 detalleRequest.getCantidad(), producto.getNombre(), producto.getPrecio());
+                detalleRequest.getCantidad(), producto.getTitle(), producto.getPrice());
 
         return detalle;
     }
@@ -138,19 +139,17 @@ public class OrdenService {
                 orden.getUsuario().getUsername(),
                 orden.getFecha(),
                 orden.getTotal(),
-                detalles
-        );
+                detalles);
     }
 
     private OrdenDTO.DetalleResponse convertirADetalleResponse(OrdenDetalle detalle) {
         return new OrdenDTO.DetalleResponse(
                 detalle.getId(),
                 detalle.getProducto().getId(),
-                detalle.getProducto().getNombre(),
+                detalle.getProducto().getTitle(),
                 detalle.getCantidad(),
                 detalle.getPrecioUnitario(),
-                detalle.getSubtotal()
-        );
+                detalle.getSubtotal());
     }
 
     private OrdenDTO.OrdenSummaryResponse convertirAOrdenSummary(Orden orden) {
@@ -163,7 +162,6 @@ public class OrdenService {
                 orden.getId(),
                 orden.getFecha(),
                 orden.getTotal(),
-                cantidadTotalItems
-        );
+                cantidadTotalItems);
     }
 }

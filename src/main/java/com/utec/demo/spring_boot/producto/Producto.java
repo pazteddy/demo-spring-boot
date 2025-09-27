@@ -2,28 +2,17 @@ package com.utec.demo.spring_boot.producto;
 
 public class Producto {
     private Long id;
-    private String nombre;
-    private Double precio;
-    public Producto(Long id,String nombre,Double precio){
+    private String title;
+    private String imgSrc;
+    private Double price;
+    private Integer stock;
+
+    public Producto(Long id, String title, String imgSrc, Double price, Integer stock) {
         this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+        this.title = title;
+        this.imgSrc = imgSrc;
+        this.price = price;
+        this.stock = stock;
     }
 
     public Long getId() {
@@ -32,5 +21,37 @@ public class Producto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

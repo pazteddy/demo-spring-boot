@@ -9,8 +9,9 @@ public class ProductoBD {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private Double precio;
+    private String title;
+    private String imgSrc;
+    private Double price;
     private Integer stock;
 
     public Long getId() {
@@ -21,20 +22,28 @@ public class ProductoBD {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public String getImgSrc() {
+        return imgSrc;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Integer getStock() {
