@@ -1,27 +1,50 @@
 package com.utec.demo.spring_boot.producto;
 
 public class ProductoDTO {
-    private String nombre;
-    private Double precio;
-    public ProductoDTO(){}
-    public ProductoDTO(String nombre,Double precio){
-        this.nombre = nombre;
-        this.precio = precio;
+    private String title;
+    private String imgSrc;
+    private Double price;
+    private Integer stock;
+
+    public ProductoDTO() {
     }
 
-    public String getNombre() {
-        return nombre;
+    public ProductoDTO(String title, String imgSrc, Double price, Integer stock) {
+        this.title = title;
+        this.imgSrc = imgSrc;
+        this.price = price;
+        this.stock = stock;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getTitle() {
+        return title;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

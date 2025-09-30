@@ -1,0 +1,56 @@
+@baseUrl = http://localhost:8080
+@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTg5NjI0NTgsImV4cCI6MTc1OTA0ODg1OH0.hIgtuxrnLTRz8WcJ4n8fjG7GjguvydvUbHba2FxfOv8
+
+### ENDPOINTS PUBLICOS DE PRUEBA
+GET {{baseUrl}}/api/auth/public
+###
+GET {{baseUrl}}/api/saludo
+###
+GET {{baseUrl}}/actuator/health
+
+### ENDPOINTS PROTEGIDOS DE PRUEBA (añadir token del login)
+GET {{baseUrl}}/api/usuarios/test-protected
+Authorization: Bearer {{token}}
+
+### ENDPOINTS PROTEGIDO ADMIN (añadir token del login)
+GET {{baseUrl}}/api/usuarios/admin
+Authorization: Bearer {{token}}
+
+### USUARIOS
+### Crear usuario
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "123456"
+}
+### Login usuario
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "123456"
+}
+### Perfil usuario (añadir token del login)
+GET {{baseUrl}}/api/usuarios/perfil
+Authorization: Bearer {{token}}
+
+### PRODUCTOS
+### Listar productos
+GET {{baseUrl}}/api/productosBD
+Authorization: Bearer {{token}}
+
+### Crear orden
+POST {{baseUrl}}/api/ordenes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "detalles": [
+    {"productoId": 1, "cantidad": 2},
+    {"productoId": 2, "cantidad": 1}
+  ]
+}
